@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.sqlite.JDBC
     hikari:
       maximum-pool-size: 3
-      connection-timeout: 30000
+      connection-timeout: 60000
       idle-timeout: 10000
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect

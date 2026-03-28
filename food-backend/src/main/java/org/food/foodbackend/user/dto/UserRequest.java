@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserRegisterRequest {
+public class UserRequest {
     @NotBlank(message = "Username cannot be blank!")
     @Size(min = 4, max = 20, message = "Username should between 4-20 characters!")
     private String userName;

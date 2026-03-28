@@ -2,9 +2,10 @@ package org.food.foodbackend.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.food.foodbackend.user.dto.UserRegisterRequest;
+import org.food.foodbackend.user.dto.UserRequest;
 import org.food.foodbackend.user.entity.User;
 import org.food.foodbackend.user.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +26,23 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterRequest request) {
-        try {
-            userService.register(User.builder()
-                    .userName(request.getUserName())
-                    .password(request.getPassword())
-                    .firstName(request.getFirstName())
-                    .lastName(request.getLastName())
-                    .build());
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<?> register(@Valid @RequestBody UserRequest request) {
+        userService.register(User.builder()
+                .userName(request.getUserName())
+                .password(request.getPassword())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .build());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody UserRequest request) {
+        Long id = userService.login(User.builder()
+                .userName(request.getUserName())
+                .password(request.getPassword())
+                .build());
+        return ResponseEntity.ok(id);
     }
 }
+
