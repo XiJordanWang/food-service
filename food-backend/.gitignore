@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+food_service.db
+food_service.db-shm
+food_service.db-wal

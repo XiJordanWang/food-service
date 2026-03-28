@@ -28,7 +28,8 @@ public class UserService {
     }
 
     public Long login(User user) {
-        return userRepository.findByUserNameAndPassword(user.getUserName(), user.getPassword())
+        return userRepository.findByUserName(user.getUserName())
+                .filter(dbUser -> passwordEncoder.matches(user.getPassword(), dbUser.getPassword()))
                 .map(User::getId)
                 .orElseThrow(() -> new InvalidCredentialsException("Username or password is not correct!"));
     }
