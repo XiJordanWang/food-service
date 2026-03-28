@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/onbording");
+      router.push("/login");
     }, 1000); // 1 second delay
 
     return () => clearTimeout(timer); // Cleanup the timer on unmount
