@@ -19,9 +19,9 @@ public class User {
     @Column(nullable = false)
     private Long id;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "username", unique = true)
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     @JdbcTypeCode(SqlTypes.VARCHAR)

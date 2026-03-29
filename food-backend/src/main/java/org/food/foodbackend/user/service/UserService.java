@@ -19,8 +19,8 @@ public class UserService {
 
     @Transactional
     public void register(User user) {
-        if (userRepository.findByUserName(user.getUserName()).isPresent()) {
-            throw new UserAlreadyExistsException("The username " + user.getUserName() + " is exist, please change another one!");
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException("The username " + user.getUsername() + " is exist, please change another one!");
         }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public Long login(User user) {
-        return userRepository.findByUserName(user.getUserName())
+        return userRepository.findByUsername(user.getUsername())
                 .filter(dbUser -> passwordEncoder.matches(user.getPassword(), dbUser.getPassword()))
                 .map(User::getId)
                 .orElseThrow(() -> new InvalidCredentialsException("Username or password is not correct!"));

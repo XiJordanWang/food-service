@@ -2,22 +2,34 @@
 
 import { useState } from "react";
 import { login } from "@/service/user";
-import { Eye, EyeOff } from "lucide-react"; // Eye logo for show/hide password
+import { Eye, EyeOff, AlertCircle } from "lucide-react"; // Eye logo for show/hide password
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  async function handleLoginAction(formData: FormData) {
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+
+    setErrorMsg(null);
+    setIsPending(true);
+
+    console.log("Attempting login with:", { username, password });
+
     try {
       const result = await login(username, password);
-      console.log("Login successful:", result);
-    } catch (error) {
-      console.error("Login failed:", error);
+      console.log("success:", result);
+      // 跳转逻辑...
+    } catch (error:
+      | { status: number; timestamp: string; message: string }
+      | any) {
+      setErrorMsg(error.message);
+    } finally {
+      setIsPending(false);
     }
-  };
+  }
 
   return (
     <div
@@ -39,7 +51,14 @@ export default function Login() {
 
       <main className="flex-1 w-full bg-white rounded-t-[40px] shadow-2xl">
         <div className="w-full max-w-md mx-auto px-8 py-10 space-y-6">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          {errorMsg && (
+            <div className="flex items-center gap-2 p-4 bg-red-50 text-red-600 rounded-xl border border-red-100 text-sm">
+              <AlertCircle size={18} />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          <form className="space-y-6" action={handleLoginAction}>
             <div className="space-y-2">
               <label
                 htmlFor="username"
@@ -50,10 +69,9 @@ export default function Login() {
               </label>
               <input
                 id="username"
+                name="username"
                 type="text"
                 placeholder="user"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
                 required
                 className="block w-full h-14 rounded-xl border border-gray-200 bg-[#F0F5FA] px-4 py-3 
                 placeholder:text-[#A0A5BA] placeholder:text-lg
@@ -70,10 +88,9 @@ export default function Login() {
               <div className="relative flex items-center">
                 <input
                   id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="********"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="block w-full h-14 rounded-xl border border-gray-200 bg-[#F0F5FA] px-4 py-3 
                 placeholder:text-[#A0A5BA] placeholder:text-lg

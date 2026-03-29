@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserRequest request) {
         userService.register(User.builder()
-                .userName(request.getUserName())
+                .username(request.getUsername())
                 .password(request.getPassword())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserRequest request) {
         Long id = userService.login(User.builder()
-                .userName(request.getUserName())
+                .username(request.getUsername())
                 .password(request.getPassword())
                 .build());
         return ResponseEntity.ok(id);

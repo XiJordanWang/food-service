@@ -2,10 +2,10 @@ spring:
   name:
     food-backend
   datasource:
-    url: jdbc:sqlite:food_service.db?journal_mode=WAL
+    url: jdbc:sqlite:food_service.db?busy_timeout=5000
     driver-class-name: org.sqlite.JDBC
     hikari:
-      maximum-pool-size: 3
+      maximum-pool-size: 1
       connection-timeout: 60000
       idle-timeout: 10000
   jpa:
