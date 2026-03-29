@@ -1,16 +1,22 @@
+import request from "@/lib/api-client";
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+}
+
 export async function login(username: string, password: string) {
-  const response = await fetch(`/user/login`, {
+  return request("/user/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({ username, password }),
   });
+}
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || JSON.stringify(data));
-  }
-  return data;
+export async function register(data: RegisterData) {
+  return request("/user/register", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 }
