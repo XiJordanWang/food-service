@@ -5,10 +5,14 @@ import { useRouter } from "next/navigation";
 import { login } from "@/service/user";
 import Link from "next/link";
 import { Background, WhiteBlock, Header } from "@/components/user/background";
-import { Input, PasswordInput, Button, ErrorMessage } from "@/components/user/form";
+import {
+  Input,
+  PasswordInput,
+  Button,
+  ErrorMessage,
+} from "@/components/user/form";
 
 export default function Login() {
-
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -38,12 +42,15 @@ export default function Login() {
 
   return (
     <Background>
-      <Header title="Login In" information="Please sign in to your existing account" />
+      <Header
+        title="Login In"
+        information="Please sign in to your existing account"
+      />
 
       <WhiteBlock>
         {errorMsg && <ErrorMessage message={errorMsg} />}
 
-        <form className="space-y-6 w-full max-w-md mx-auto px-8 py-10 space-y-6" action={handleLoginAction}>
+        <form action={handleLoginAction}>
           <Input
             id="username"
             label="Username"
@@ -71,7 +78,13 @@ export default function Login() {
         </form>
 
         <div className="text-center text-sm text-[#7E8A97] mb-10">
-          Dont't have an account? <Link href="/user/register" className="text-[#FF7622] opacity-80 hover:opacity-100">Sign Up</Link>
+          Dont't have an account?{" "}
+          <Link
+            href="/user/register"
+            className="text-[#FF7622] opacity-80 hover:opacity-100"
+          >
+            Sign Up
+          </Link>
         </div>
       </WhiteBlock>
     </Background>
