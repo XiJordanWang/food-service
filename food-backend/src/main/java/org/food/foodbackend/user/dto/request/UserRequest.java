@@ -1,4 +1,4 @@
-package org.food.foodbackend.user.dto;
+package org.food.foodbackend.user.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

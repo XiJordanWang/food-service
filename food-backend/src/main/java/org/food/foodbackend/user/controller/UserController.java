@@ -2,7 +2,8 @@ package org.food.foodbackend.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.food.foodbackend.user.dto.UserRequest;
+import org.food.foodbackend.user.dto.request.UserRequest;
+import org.food.foodbackend.user.dto.response.UserResponse;
 import org.food.foodbackend.user.entity.User;
 import org.food.foodbackend.user.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -37,12 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UserRequest request) {
-        Long id = userService.login(User.builder()
+    public ResponseEntity<UserResponse> login(@Valid @RequestBody UserRequest request) {
+        UserResponse userResponse = userService.login(User.builder()
                 .username(request.getUsername())
                 .password(request.getPassword())
                 .build());
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(userResponse);
     }
 }
 

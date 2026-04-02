@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.food.foodbackend.common.exception.InvalidCredentialsException;
 import org.food.foodbackend.common.exception.UserAlreadyExistsException;
+import org.food.foodbackend.user.dto.response.UserResponse;
 import org.food.foodbackend.user.entity.User;
 import org.food.foodbackend.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +28,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Long login(User user) {
+    public UserResponse login(User user) {
         return userRepository.findByUsername(user.getUsername())
                 .filter(dbUser -> passwordEncoder.matches(user.getPassword(), dbUser.getPassword()))
-                .map(User::getId)
+                .map(userDb -> {
+                    return UserResponse.builder()
+                            .id(userDb.getId())
+                            .firstName(userDb.getFirstName())
+                            .lastName(userDb.getLastName())
+                            .build();
+                })
                 .orElseThrow(() -> new InvalidCredentialsException("Username or password is not correct!"));
     }
 }
