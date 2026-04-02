@@ -52,6 +52,7 @@ export default function Register() {
     }
 
     return (<Background>
+        // TODO: Back button
         <Header title="Sign Up" information="Create a new account to start your food journey" />
         <WhiteBlock>
             {errorMsg && <ErrorMessage message={errorMsg} />}
