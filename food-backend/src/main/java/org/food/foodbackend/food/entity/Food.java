@@ -1,4 +1,4 @@
-package org.food.foodbackend.category.entity;
+package org.food.foodbackend.food.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,22 +7,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @Builder
-@Table(name = "category")
+@Entity
+@Table(name = "food")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Food {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "category_id")
+    private Long categoryId;
+
     @Column(name = "name")
     private String name;
 
-    @Column(name = "icon")
-    private byte[] icon;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "counts")
-    private Integer counts;
+    @Column(name = "banner")
+    private byte[] banner;
 }
