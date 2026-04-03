@@ -1,14 +1,15 @@
-import Image from 'next/image';
+"use client";
 
-const categories = [
-    { name: 'Pizza', icon: '/icons/pizza.png' },
-    { name: 'Burger', icon: '/icons/burger.png' },
-    { name: 'Sushi', icon: '/icons/sushi.png' },
-    { name: 'Dessert', icon: '/icons/dessert.png' },
-    { name: 'Drinks', icon: '/icons/drinks.png' },
-];
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Category, fetchCategories } from '@/service/category';
 
 export default function Home() {
+    const [categories, setCategories] = useState<Category[]>([]);
+    useEffect(() => {
+        fetchCategories().then(setCategories);
+    }, []);
+
     return (
         <div className="min-h-screen bg-[#FFFFFF] p-8">
             <header className='flex items-center justify-between mt-6 mb-10'>
@@ -36,11 +37,13 @@ export default function Home() {
                         <div className='text-[#32343E] text-[18px] text-bold'>All Categories</div>
                         <div className='text-[#333333] text-[16px]'>See All <Image src="/icons/vector.png" className='ml-2 inline' alt="vector" width={5} height={10} /></div>
                     </div>
-                    <div className='grid grid-cols-2 gap-4 p-2'>
+                    <div className='grid grid-cols-2 gap-4 p-2 mt-2'>
                         {categories.map((category) => (
-                            <div key={category.name} className='flex flex-col items-center bg-[#FFFFFF] border border-gray-100 rounded-2xl shadow-sm'>
-                                <div className='border rounded-2xl w-full border-[#98A8B8] aspect-4/3 flex items-center justify-center'>
-                                    <div className="text-xs text-gray-400">Photo</div>
+                            <div key={category.name} className='object-contain flex flex-col items-center bg-[#FFFFFF] border border-gray-100 rounded-2xl shadow-sm'>
+                                <div className='aspect-4/3 flex items-center justify-center mt-4'>
+                                    <Image src={category.icon.startsWith('data:')
+                                        ? category.icon
+                                        : `data:image/png;base64,${category.icon}`} alt={category.name} width={122} height={104} />
                                 </div>
                                 <div className='text-[#676767] text-[18px] text-bold font-medium m-3'>{category.name}</div>
                             </div>
