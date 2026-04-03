@@ -20,6 +20,12 @@
   }
 }
 
+@layer base {
+  form {
+    @apply w-full max-w-md mx-auto px-8 py-10 space-y-6;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

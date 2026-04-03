@@ -56,7 +56,7 @@ export default function Register() {
         <Header title="Sign Up" information="Create a new account to start your food journey" />
         <WhiteBlock>
             {errorMsg && <ErrorMessage message={errorMsg} />}
-            <form action={handleRegister} className="w-full max-w-md mx-auto px-8 py-10 space-y-6">
+            <form action={handleRegister}>
                 <Input id="first-name" label="First Name" name="first-name" type="text" placeholder="John" />
                 <Input id="last-name" label="Last Name" name="last-name" type="text" placeholder="Doe" />
                 <Input id="username" label="Username" name="username" type="text" placeholder="user" />
